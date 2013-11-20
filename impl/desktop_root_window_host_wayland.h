@@ -17,9 +17,7 @@ class OzoneWindowEventFilter;
 namespace corewm {
 class Tooltip;
 }
-}
 
-namespace ozonewayland {
 class DesktopDragDropClientWayland;
 
 class VIEWS_EXPORT DesktopRootWindowHostWayland :
@@ -192,6 +190,6 @@ class VIEWS_EXPORT DesktopRootWindowHostWayland :
   DISALLOW_COPY_AND_ASSIGN(DesktopRootWindowHostWayland);
 };
 
-}  // namespace ozonewayland
+}  // namespace views
 
 #endif  // DESKTOP_ROOT_WINDOW_HOST_WAYLAND_H_

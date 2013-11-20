@@ -9,7 +9,7 @@
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/views/views_export.h"
 
-namespace ozonewayland {
+namespace views {
 
 class VIEWS_EXPORT DesktopDragDropClientWayland
     : public aura::client::DragDropClient {

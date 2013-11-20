@@ -22,8 +22,8 @@ DesktopFactoryWayland::~DesktopFactoryWayland()
 views::DesktopRootWindowHost* DesktopFactoryWayland::CreateRootWindowHost(
     views::internal::NativeWidgetDelegate* native_widget_delegate,
     views::DesktopNativeWidgetAura* desktop_native_widget_aura) {
-  return new DesktopRootWindowHostWayland(native_widget_delegate,
-                                          desktop_native_widget_aura);
+  return new views::DesktopRootWindowHostWayland(native_widget_delegate,
+                                                 desktop_native_widget_aura);
 }
 
 }  // namespace ozonewayland
