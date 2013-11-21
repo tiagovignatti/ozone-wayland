@@ -8,6 +8,7 @@
 
 #include "base/basictypes.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/views/widget/desktop_aura/desktop_root_window_host_ozone.h"
 #include "ui/views/widget/desktop_aura/desktop_root_window_host.h"
 
 namespace views {
@@ -21,9 +22,7 @@ class Tooltip;
 class DesktopDragDropClientWayland;
 
 class VIEWS_EXPORT DesktopRootWindowHostWayland :
-    public views::DesktopRootWindowHost,
-    public aura::RootWindowHost,
-    public base::MessageLoop::Dispatcher {
+    public views::DesktopRootWindowHostOzone {
  public:
   DesktopRootWindowHostWayland(
       views::internal::NativeWidgetDelegate* native_widget_delegate,
