@@ -9,6 +9,8 @@
 #include "base/message_loop/message_loop.h"
 #include "ui/gfx/ozone/surface_factory_ozone.h"
 
+#include "ozone/wayland/window.h"
+
 namespace ozonewayland {
 
 class DesktopScreenWayland;
@@ -17,7 +19,6 @@ class OzoneProcessObserver;
 class OzoneDisplayChannel;
 class OzoneDisplayChannelHost;
 class WaylandDisplay;
-class WaylandWindow;
 class WaylandDispatcher;
 class WaylandScreen;
 class WindowChangeObserver;
@@ -47,8 +48,6 @@ class OzoneDisplay : public gfx::SurfaceFactoryOzone,
     Menu = 3 // An undecorated Window, with transient properties
              // specialized to menus.
   };
-
-  typedef unsigned WidgetType;
 
   static OzoneDisplay* GetInstance();
 
@@ -91,10 +90,14 @@ class OzoneDisplay : public gfx::SurfaceFactoryOzone,
                             unsigned height);
   void SetWidgetTitle(gfx::AcceleratedWidget w, const string16& title);
   void OnWidgetTitleChanged(gfx::AcceleratedWidget w, const string16& title);
-
-  void SetWidgetType(gfx::AcceleratedWidget w, WidgetType type);
-  void OnWidgetTypeChanged(gfx::AcceleratedWidget w, WidgetType type);
-
+  void SetWidget(gfx::AcceleratedWidget widget,
+                 gfx::AcceleratedWidget parent,
+                 unsigned x, unsigned y,
+                 WaylandWindow::ShellType type);
+  void OnWidgetChanged(gfx::AcceleratedWidget widget,
+                       gfx::AcceleratedWidget parent,
+                       unsigned x, unsigned y,
+                       WaylandWindow::ShellType type);
   void SetWindowChangeObserver(WindowChangeObserver* observer);
 
  private:
