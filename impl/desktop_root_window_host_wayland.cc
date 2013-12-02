@@ -108,14 +108,25 @@ void DesktopRootWindowHostWayland::InitWaylandWindow(
     window_parent_->window_children_.insert(this);
   }
 
+  bounds_ = params.bounds;
   switch (params.type) {
-    // TODO(kalyan): For now treat all of them the same and set the shell type
-    // to menu. Fix this appropriately when handling the positioning of popups.
     case Widget::InitParams::TYPE_TOOLTIP:
     case Widget::InitParams::TYPE_POPUP:
     case Widget::InitParams::TYPE_MENU:
-      OzoneDisplay::GetInstance()->SetWidget(window_, 0, 0, 0,
-                                             OzoneDisplay::Menu);
+      if (!window_parent_) {
+        // content_shell menus don't have parent so we use root window to
+        // calculate transient windows' relative positioning.
+        DesktopRootWindowHostWayland* rootWindow = GetHostForAcceleratedWidget(
+            open_windows().front());
+        OzoneDisplay::GetInstance()->SetWidget(window_,
+            rootWindow->GetAcceleratedWidget(),
+            bounds_.x(), bounds_.y(),
+            OzoneDisplay::Menu);
+      } else {
+        OzoneDisplay::GetInstance()->SetWidget(window_, window_parent_->window_,
+            bounds_.x(), bounds_.y(),
+            OzoneDisplay::Menu);
+      }
       break;
     case Widget::InitParams::TYPE_WINDOW:
       OzoneDisplay::GetInstance()->SetWidget(window_, 0, 0, 0,
@@ -128,8 +139,7 @@ void DesktopRootWindowHostWayland::InitWaylandWindow(
       break;
   }
 
-  surface_factory->AttemptToResizeAcceleratedWidget(window_, params.bounds);
-  bounds_ = params.bounds;
+  surface_factory->AttemptToResizeAcceleratedWidget(window_, bounds_);
 }
 
 void DesktopRootWindowHostWayland::HandleNativeWidgetActivationChanged(
