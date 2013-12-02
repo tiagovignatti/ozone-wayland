@@ -91,10 +91,14 @@ class OzoneDisplay : public gfx::SurfaceFactoryOzone,
                             unsigned height);
   void SetWidgetTitle(gfx::AcceleratedWidget w, const string16& title);
   void OnWidgetTitleChanged(gfx::AcceleratedWidget w, const string16& title);
-
-  void SetWidgetType(gfx::AcceleratedWidget w, WidgetType type);
-  void OnWidgetTypeChanged(gfx::AcceleratedWidget w, WidgetType type);
-
+  void SetWidget(gfx::AcceleratedWidget widget,
+                 gfx::AcceleratedWidget parent,
+                 unsigned x, unsigned y,
+                 WidgetType type);
+  void OnWidgetChanged(gfx::AcceleratedWidget widget,
+                       gfx::AcceleratedWidget parent,
+                       unsigned x, unsigned y,
+                       WidgetType type);
   void SetWindowChangeObserver(WindowChangeObserver* observer);
 
  private:

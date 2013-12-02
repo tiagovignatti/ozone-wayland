@@ -30,7 +30,10 @@ class OzoneDisplayChannel : public IPC::Listener
                             unsigned width,
                             unsigned height);
   void OnWidgetTitleChanged(unsigned widget, string16 title);
-  void OnWidgetTypeChanged(unsigned widget, unsigned type);
+  void OnWidgetChanged(unsigned widget,
+                       unsigned parent,
+                       unsigned x, unsigned y,
+                       unsigned type);
 
  private:
   bool mapped_ :1;

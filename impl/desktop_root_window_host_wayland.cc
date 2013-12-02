@@ -114,10 +114,12 @@ void DesktopRootWindowHostWayland::InitWaylandWindow(
     case Widget::InitParams::TYPE_TOOLTIP:
     case Widget::InitParams::TYPE_POPUP:
     case Widget::InitParams::TYPE_MENU:
-      OzoneDisplay::GetInstance()->SetWidgetType(window_, OzoneDisplay::Menu);
+      OzoneDisplay::GetInstance()->SetWidget(window_, 0, 0, 0,
+                                             OzoneDisplay::Menu);
       break;
     case Widget::InitParams::TYPE_WINDOW:
-      OzoneDisplay::GetInstance()->SetWidgetType(window_, OzoneDisplay::Window);
+      OzoneDisplay::GetInstance()->SetWidget(window_, 0, 0, 0,
+                                             OzoneDisplay::Window);
       break;
     case Widget::InitParams::TYPE_WINDOW_FRAMELESS:
       NOTIMPLEMENTED();

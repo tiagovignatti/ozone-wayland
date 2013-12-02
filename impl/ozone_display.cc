@@ -304,26 +304,33 @@ void OzoneDisplay::OnWidgetTitleChanged(gfx::AcceleratedWidget w,
   widget->SetWindowTitle(title);
 }
 
-void OzoneDisplay::SetWidgetType(gfx::AcceleratedWidget w, WidgetType type) {
+void OzoneDisplay::SetWidget(gfx::AcceleratedWidget widget,
+                             gfx::AcceleratedWidget parent,
+                             unsigned x, unsigned y,
+                             WidgetType type) {
   if (host_)
-    host_->SendWidgetType(w, type);
+    host_->SendWidget(widget, parent, x, y, type);
   else
-    OnWidgetTypeChanged(w, type);
+    OnWidgetChanged(widget, parent, x, y, type);
 }
 
-void OzoneDisplay::OnWidgetTypeChanged(
-    gfx::AcceleratedWidget w, WidgetType type) {
-  WaylandWindow* widget = GetWidget(w);
-  DCHECK(widget);
+void OzoneDisplay::OnWidgetChanged(gfx::AcceleratedWidget widget,
+                                   gfx::AcceleratedWidget parent,
+                                   unsigned x, unsigned y,
+                                   WidgetType type) {
+  WaylandWindow* window = GetWidget(widget);
+  WaylandWindow* parent_window = GetWidget(parent);
+  DCHECK(window);
   switch (type) {
   case Window:
-    widget->SetShellType(WaylandWindow::TOPLEVEL);
+    window->SetShell(WaylandWindow::TOPLEVEL);
     break;
   case WindowFrameLess:
     NOTIMPLEMENTED();
     break;
   case Menu:
-    widget->SetShellType(WaylandWindow::MENU);
+    NOTIMPLEMENTED();
+    window->SetShell(WaylandWindow::MENU);
     break;
   default:
     break;

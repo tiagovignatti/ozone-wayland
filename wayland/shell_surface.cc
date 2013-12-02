@@ -53,7 +53,8 @@ WaylandShellSurface::~WaylandShellSurface() {
   }
 }
 
-void WaylandShellSurface::UpdateShellSurface(WaylandWindow::ShellType type) const
+void WaylandShellSurface::UpdateShellSurface(WaylandWindow::ShellType type,
+    WaylandShellSurface* shell_parent_, unsigned x, unsigned y) const
 {
   switch (type) {
   case WaylandWindow::TOPLEVEL:

@@ -56,14 +56,18 @@ void OzoneDisplayChannelHost::SendWidgetState(unsigned w,
                                                     height));
 }
 
-void OzoneDisplayChannelHost::SendWidgetType(
-    unsigned w, unsigned type) {
+void OzoneDisplayChannelHost::SendWidget(unsigned widget,
+                                         unsigned parent,
+                                         unsigned x, unsigned y,
+                                         unsigned type) {
   if (router_id_)
-    Send(new WaylandWindow_Type(router_id_, w, type));
+    Send(new WaylandWindow_Widget(router_id_, widget, parent, x, y, type));
   else
-    deferred_messages_.push(new WaylandWindow_Type(router_id_,
-                                                    w,
-                                                    type));
+    deferred_messages_.push(new WaylandWindow_Widget(router_id_,
+                                                     widget,
+                                                     parent,
+                                                     x, y,
+                                                     type));
 }
 
 void OzoneDisplayChannelHost::SendWidgetTitle(
