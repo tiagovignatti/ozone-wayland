@@ -132,19 +132,21 @@ void WaylandPointer::OnPointerEnter(void* data,
                                     wl_fixed_t sx_w,
                                     wl_fixed_t sy_w)
 {
+  if (!surface) {
+    /* enter event for a window we've just destroyed */
+    return;
+  }
   WaylandPointer* device = static_cast<WaylandPointer*>(data);
   WaylandDisplay::GetInstance()->SetSerial(serial);
-  // TODO(vignatti): sx and sy have to be used for setting different resizing
-  // and other cursors.
-  WaylandWindow* window = NULL;
-  if (surface)
-    window = static_cast<WaylandWindow*>(wl_surface_get_user_data(surface));
 
-    device->focused_window_handle_ = window ? window->Handle() : 0;
-    device->cursor_->Update(WaylandCursor::CURSOR_LEFT_PTR, serial);
-    device->dispatcher_->PointerEnter(device->focused_window_handle_,
-                                      device->pointer_position_.x(),
-                                      device->pointer_position_.y());
+  WaylandWindow* window = NULL;
+  window = static_cast<WaylandWindow*>(wl_surface_get_user_data(surface));
+  DCHECK(window);
+  device->focused_window_handle_ = window->Handle();
+  device->cursor_->Update(WaylandCursor::CURSOR_LEFT_PTR, serial);
+  device->dispatcher_->PointerEnter(device->focused_window_handle_,
+                                    device->pointer_position_.x(),
+                                    device->pointer_position_.y());
 }
 
 void WaylandPointer::OnPointerLeave(void* data,
