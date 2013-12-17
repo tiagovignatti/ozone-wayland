@@ -96,10 +96,7 @@ void WaylandWindow::ToggleFullscreen()
 
 void WaylandWindow::RealizeAcceleratedWidget()
 {
-  if (!shell_surface_) {
-    LOG(ERROR) << "Shell type not set. Setting it to TopLevel";
-    SetShellAttributes(TOPLEVEL);
-  }
+  DCHECK(shell_surface_);
 
   if (!window_)
     window_ = new EGLWindow(shell_surface_->Surface()->wlSurface(),
