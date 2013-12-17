@@ -78,6 +78,7 @@ void WaylandPointer::OnButtonNotify(void* data,
                                     uint32_t state)
 {
   WaylandPointer* device = static_cast<WaylandPointer*>(data);
+  WaylandDisplay::GetInstance()->SetSerial(serial);
   int currentState;
   if (state == WL_POINTER_BUTTON_STATE_PRESSED)
     currentState = 1;
@@ -132,6 +133,7 @@ void WaylandPointer::OnPointerEnter(void* data,
                                     wl_fixed_t sy_w)
 {
   WaylandPointer* device = static_cast<WaylandPointer*>(data);
+  WaylandDisplay::GetInstance()->SetSerial(serial);
   // TODO(vignatti): sx and sy have to be used for setting different resizing
   // and other cursors.
   WaylandWindow* window = NULL;
@@ -151,6 +153,7 @@ void WaylandPointer::OnPointerLeave(void* data,
                                     wl_surface* surface)
 {
   WaylandPointer* device = static_cast<WaylandPointer*>(data);
+  WaylandDisplay::GetInstance()->SetSerial(serial);
   device->dispatcher_->PointerLeave(device->focused_window_handle_,
                                     device->pointer_position_.x(),
                                     device->pointer_position_.y());
