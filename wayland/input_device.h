@@ -25,6 +25,9 @@ class WaylandInputDevice {
   WaylandPointer* GetPointer() const { return input_pointer_; }
   WaylandWindow* GetFocusWindow() { return focus_window_; }
   void SetFocusWindow(WaylandWindow* window) { focus_window_ = window; }
+  uint32_t GetGrabButton() { return grab_button_; }
+  WaylandWindow* GetGrabWindow() { return grab_window_; }
+  void SetGrabWindow(WaylandWindow* window, uint32_t button);
 
  private:
   static void OnSeatCapabilities(void *data,
@@ -35,6 +38,8 @@ class WaylandInputDevice {
   WaylandKeyboard* input_keyboard_;
   WaylandPointer* input_pointer_;
   WaylandWindow* focus_window_;
+  uint32_t grab_button_;
+  WaylandWindow* grab_window_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandInputDevice);
 };
