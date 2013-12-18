@@ -336,9 +336,9 @@ void OzoneDisplay::OnWidgetAttributesChanged(gfx::AcceleratedWidget widget,
   case WindowFrameLess:
     NOTIMPLEMENTED();
     break;
-  case Transient:
+  case Popup:
     DCHECK(parent_window);
-    window->SetShellAttributes(WaylandWindow::TRANSIENT,
+    window->SetShellAttributes(WaylandWindow::POPUP,
                                parent_window->ShellSurface(),
                                x,
                                y);
