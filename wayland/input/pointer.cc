@@ -7,6 +7,7 @@
 #include <linux/input.h>
 
 #include "ozone/wayland/dispatcher.h"
+#include "ozone/wayland/input_device.h"
 #include "ozone/wayland/input/cursor.h"
 #include "ozone/wayland/window.h"
 #include "ui/base/hit_test.h"
@@ -16,8 +17,7 @@ namespace ozonewayland {
 
 WaylandPointer::WaylandPointer()
   : cursor_(NULL),
-    dispatcher_(NULL),
-    focused_window_handle_(0) {
+    dispatcher_(NULL) {
 }
 
 WaylandPointer::~WaylandPointer() {
@@ -89,7 +89,8 @@ void WaylandPointer::OnButtonNotify(void* data,
   else if (button == BTN_MIDDLE)
     flags = ui::EF_MIDDLE_MOUSE_BUTTON;
 
-  device->dispatcher_->ButtonNotify(device->focused_window_handle_,
+  WaylandInputDevice* input = WaylandDisplay::GetInstance()->PrimaryInput();
+  device->dispatcher_->ButtonNotify(input->GetFocusWindow()->Handle(),
                                     currentState,
                                     flags,
                                     device->pointer_position_.x(),
@@ -138,9 +139,11 @@ void WaylandPointer::OnPointerEnter(void* data,
 
   WaylandWindow* window =
       static_cast<WaylandWindow*>(wl_surface_get_user_data(surface));
-  device->focused_window_handle_ = window->Handle();
   device->cursor_->Update(WaylandCursor::CURSOR_LEFT_PTR, serial);
-  device->dispatcher_->PointerEnter(device->focused_window_handle_,
+
+  WaylandInputDevice* input = WaylandDisplay::GetInstance()->PrimaryInput();
+  input->SetFocusWindow(window);
+  device->dispatcher_->PointerEnter(input->GetFocusWindow()->Handle(),
                                     device->pointer_position_.x(),
                                     device->pointer_position_.y());
 }
@@ -151,10 +154,12 @@ void WaylandPointer::OnPointerLeave(void* data,
                                     wl_surface* surface) {
   WaylandPointer* device = static_cast<WaylandPointer*>(data);
   WaylandDisplay::GetInstance()->SetSerial(serial);
-  device->dispatcher_->PointerLeave(device->focused_window_handle_,
+
+  WaylandInputDevice* input = WaylandDisplay::GetInstance()->PrimaryInput();
+  device->dispatcher_->PointerLeave(input->GetFocusWindow()->Handle(),
                                     device->pointer_position_.x(),
                                     device->pointer_position_.y());
-  device->focused_window_handle_ = 0;
+  input->SetFocusWindow(NULL);
 }
 
 }  // namespace ozonewayland
