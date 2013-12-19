@@ -62,7 +62,12 @@ void WaylandShellSurface::UpdateShellSurface(WaylandWindow::ShellType type,
   case WaylandWindow::POPUP: {
     WaylandDisplay* display = WaylandDisplay::GetInstance();
     WaylandInputDevice* input_device = display->PrimaryInput();
+    wl_surface* surface = this->Surface()->wlSurface();
     wl_surface* parent_surface = shell_parent->Surface()->wlSurface();
+    WaylandWindow* window =
+        static_cast<WaylandWindow*>(wl_surface_get_user_data(surface));
+
+    input_device->SetGrabWindow(window, 0);
     wl_shell_surface_set_popup(shell_surface_,
                                input_device->GetInputSeat(),
                                display->GetSerial(),
@@ -99,6 +104,10 @@ void WaylandShellSurface::HandleConfigure(void *data,
 
 void WaylandShellSurface::HandlePopupDone(void *data,
                                           struct wl_shell_surface *surface) {
+  WaylandInputDevice* input_device =
+      WaylandDisplay::GetInstance()->PrimaryInput();
+  input_device->SetGrabWindow(NULL, 0);
+
   // TODO(vignatti): dispatch a close window to Chromium
 }
 
