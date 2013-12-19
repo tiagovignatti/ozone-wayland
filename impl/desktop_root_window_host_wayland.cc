@@ -128,7 +128,7 @@ void DesktopRootWindowHostWayland::InitWaylandWindow(
                                                        parent->window_,
                                                        bounds_.x(),
                                                        bounds_.y(),
-                                                       OzoneDisplay::Transient);
+                                                       OzoneDisplay::Popup);
       break;
     }
     case Widget::InitParams::TYPE_WINDOW:
