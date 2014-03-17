@@ -27,6 +27,9 @@ void WLShellSurface::UpdateShellSurface(WaylandWindow::ShellType type,
                                         unsigned x,
                                         unsigned y) const {
   switch (type) {
+  case WaylandWindow::LAUNCHER:
+    wl_shell_surface_set_launcher(shell_surface_);
+    break; 
   case WaylandWindow::TOPLEVEL:
     wl_shell_surface_set_toplevel(shell_surface_);
     break;

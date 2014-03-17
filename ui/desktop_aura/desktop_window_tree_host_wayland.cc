@@ -158,6 +158,12 @@ void DesktopWindowTreeHostWayland::InitWaylandWindow(
       break;
     }
     case Widget::InitParams::TYPE_BUBBLE:
+      state_handler->SetWidgetAttributes(window_,
+                                         0,
+                                         0,
+                                         0,
+                                         ui::BUBBLE);
+      break;
     case Widget::InitParams::TYPE_WINDOW:
       state_handler->SetWidgetAttributes(window_,
                                          0,

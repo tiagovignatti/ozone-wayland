@@ -23,6 +23,7 @@ class WaylandWindow {
  public:
   enum ShellType {
     None,
+    LAUNCHER,
     TOPLEVEL,
     FULLSCREEN,
     POPUP,

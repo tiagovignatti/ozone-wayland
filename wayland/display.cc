@@ -166,6 +166,9 @@ void WaylandDisplay::SetWidgetAttributes(unsigned widget,
   WaylandWindow* parent_window = GetWidget(parent);
   DCHECK(window);
   switch (type) {
+  case ui::BUBBLE:
+    window->SetShellAttributes(WaylandWindow::LAUNCHER);
+    break;
   case ui::WINDOW:
     window->SetShellAttributes(WaylandWindow::TOPLEVEL);
     break;
@@ -180,7 +183,7 @@ void WaylandDisplay::SetWidgetAttributes(unsigned widget,
                                y);
     break;
   default:
-    break;
+    NOTREACHED();
   }
 }
 

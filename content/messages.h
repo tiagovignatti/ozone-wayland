@@ -23,7 +23,7 @@ IPC_ENUM_TRAITS_MAX_VALUE(ui::EventType,
 IPC_ENUM_TRAITS_MAX_VALUE(ui::WidgetState,
                           ui::DESTROYED)
 IPC_ENUM_TRAITS_MAX_VALUE(ui::WidgetType,
-                          ui::POPUP)
+                          ui::BUBBLE)
 
 IPC_MESSAGE_CONTROL2(WaylandInput_MotionNotify,  // NOLINT(readability/fn_size)
                      float /*x*/,
